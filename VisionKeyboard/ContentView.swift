@@ -10,17 +10,16 @@ import RealityKit
 import RealityKitContent
 
 struct ContentView: View {
+    @Environment(\.openImmersiveSpace) var openImmersiveSpace
+    @Environment(HandViewModel.self) var viewModel
+    
     var body: some View {
-        VStack {
-            Model3D(named: "Scene", bundle: realityKitContentBundle)
-                .padding(.bottom, 50)
-
-            Text("Hello, world!")
-        }
-        .padding()
+        Text(viewModel.totalText)
+            .font(.largeTitle)
+            .onAppear(){
+                Task {
+                    await openImmersiveSpace(id: "HandView")
+                }
+            }
     }
-}
-
-#Preview(windowStyle: .automatic) {
-    ContentView()
 }
